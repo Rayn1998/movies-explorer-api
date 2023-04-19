@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const { celebrate, Joi, errors } = require('celebrate');
-const { hanleError } = require('./middlewares/handleError');
+const { handleError } = require('./middlewares/handleError');
 const NotFoundError = require('./middlewares/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -50,11 +50,11 @@ app.use(errorLogger);
 app.use(errors());
 
 app.use((err, req, res, next) => {
-  hanleError(err, req, res, next);
+  handleError(err, req, res, next);
 });
 
 mongoose
-  .connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
+  .connect(process.env.DB_ADDRESS, {
     useNewUrlParser: true,
   })
   .then(
