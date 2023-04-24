@@ -10,7 +10,7 @@ const limiter = rateLimit(limit);
 
 const router = require('./routes');
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3001, DB_ADDRESS = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.use(express.json());
 app.use('/', router);
 
 mongoose
-  .connect(process.env.DB_ADDRESS, {
+  .connect(DB_ADDRESS, {
     useNewUrlParser: true,
   })
   .then(
