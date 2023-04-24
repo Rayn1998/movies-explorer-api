@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
 const BadAuthError = require('./BadAuthError');
+const { unauthorizedUserMsg } = require('../utils/constants');
 
 const auth = (req, res, next) => {
   if (!req.headers.authorization) {
-    next(new BadAuthError('Пользователь не авторизован'));
+    next(new BadAuthError(unauthorizedUserMsg));
     return;
   }
   const token = req.headers.authorization.replace('Bearer ', '');
@@ -11,7 +12,7 @@ const auth = (req, res, next) => {
   try {
     payload = jwt.verify(token, process.env.NODE_ENV !== 'production' ? process.env.JWT_SECRET : 'secret');
   } catch (e) {
-    next(new BadAuthError('Пользователь не авторизован'));
+    next(new BadAuthError(unauthorizedUserMsg));
     return;
   }
   req.user = payload;

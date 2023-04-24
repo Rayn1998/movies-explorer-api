@@ -28,7 +28,7 @@ const createMovie = async (req, res, next) => {
     nameRU,
     nameEN,
     trailerLink,
-    thumbNail,
+    thumbnail,
     movieId,
   } = req.body;
 
@@ -42,15 +42,15 @@ const createMovie = async (req, res, next) => {
     nameRU,
     nameEN,
     trailerLink,
-    thumbNail,
+    thumbnail,
     movieId,
     owner: req.user._id,
   }))
     .populate('owner')
-    .then(movie => {
+    .then((movie) => {
       res.status(201).send(movie);
     })
-    .catch(err => {
+    .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequestError('Введены некорректные данные'));
       } else if (err.code === 11000) {

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { modelEmailPatter } = require('../utils/constants');
+const { modelEmailPatter, emailIncorrectMsg } = require('../utils/constants');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: (email) => modelEmailPatter.test(email),
-      message: 'email is incorrect',
+      message: emailIncorrectMsg,
     },
   },
 

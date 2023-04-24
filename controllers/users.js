@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const BadRequestError = require('../middlewares/BadRequestError');
+const SameMovieError = require('../middlewares/SameMovieError');
 
 const getMe = async (req, res, next) => {
   const id = req.user._id;
@@ -18,12 +19,14 @@ const updateUser = async (req, res, next) => {
     const user = await User.findByIdAndUpdate(
       req.user._id,
       { name, email },
-      { new: true },
+      { new: true, runValidators: true },
     );
     res.status(200).send(user);
   } catch (err) {
     if (err.name === 'ValidationError') {
-      next(new BadRequestError('Произошла ошибка обновления профиля'));
+      next(new BadRequestError('Введены некорректные данные для обновления профиля'));
+    } else if (err.code === 11000) {
+      next(new SameMovieError('Этот email уже использован'));
     } else {
       next(err);
     }

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { linkPattern } = require('../utils/constants');
+const { linkPattern, linkIncorrectMsg } = require('../utils/constants');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -32,7 +32,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (url) => linkPattern.test(url),
-      message: 'link is incorrect',
+      message: linkIncorrectMsg,
     },
   },
 
@@ -41,16 +41,16 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (url) => linkPattern.test(url),
-      message: 'link is incorrect',
+      message: linkIncorrectMsg,
     },
   },
 
-  thumbNail: {
+  thumbnail: {
     type: String,
     required: true,
     validate: {
       validator: (url) => linkPattern.test(url),
-      message: 'link is incorrect',
+      message: linkIncorrectMsg,
     },
   },
 
@@ -63,6 +63,7 @@ const movieSchema = new mongoose.Schema({
   movieId: {
     type: String,
     required: true,
+    unique: true,
   },
 
   nameRU: {
