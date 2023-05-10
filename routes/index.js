@@ -1,8 +1,11 @@
 const express = require('express');
 
 const router = express.Router();
-const { celebrate, Joi, errors } = require('celebrate');
-
+const { celebrate, errors } = require('celebrate');
+const helmet = require('helmet');
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+const limit = require('../middlewares/rateLimiter/limit');
 const signUp = require('../middlewares/signUp');
 const signIn = require('../middlewares/signIn');
 const auth = require('../middlewares/auth');
@@ -15,21 +18,28 @@ const NotFoundError = require('../middlewares/NotFoundError');
 const { handleError } = require('../middlewares/handleError');
 const { requestLogger, errorLogger } = require('../middlewares/logger');
 
+const {
+  signInValidation,
+  signUpValidation,
+} = require('../middlewares/validation/singInUpValidation');
+const limiter = rateLimit(limit);
+
 router.use(requestLogger);
 
-router.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    email: Joi.string().required().email(),
-    password: Joi.string().min(4).required(),
+router.use(limiter);
+router.use(helmet());
+
+router.use(
+  cors({
+    origin: '*',
   }),
-}), signUp);
-router.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(2),
-  }),
-}), signIn);
+);
+
+router.use(express.json());
+
+router.post('/signup', celebrate(signUpValidation), signUp);
+
+router.post('/signin', celebrate(signInValidation), signIn);
 
 router.use('/movies', auth, movieRoutes);
 router.use('/users', auth, userRoutes);

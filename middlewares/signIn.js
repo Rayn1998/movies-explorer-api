@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const BadAuthError = require('./BadAuthError');
-const emailPasswordIncorrectMsg = require('../utils/constants');
+const { emailPasswordIncorrectMsg } = require('../utils/constants');
 
 const signIn = async (req, res, next) => {
   const { email, password } = req.body;

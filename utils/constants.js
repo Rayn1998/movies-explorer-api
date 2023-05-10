@@ -9,6 +9,11 @@ const emailPasswordIncorrectMsg = 'Неправильные почта или п
 const sameEmailMsg = 'Пользователь с таким email уже зарегистрирован';
 const incorrectDataMsg = 'Введены некорректные данные';
 const pageNotFoundMsg = 'Страница не найдена';
+const sameMovieMsg = 'Такой фильм уже есть';
+const filmNotFoundMsg = 'Фильм не найден';
+const cantDeleteOtherUserMovieMsg = 'Вы не можете удалить фильм другого пользователя';
+const movieDeletedMsg = 'Фильм удалён';
+const incorrectMovieIdMsg = 'Введён некорректный id фильма';
 
 // SCHEMA MESSAGES
 const linkIncorrectMsg = 'link is incorrect';
@@ -27,4 +32,9 @@ module.exports = {
   incorrectDataMsg,
   linkIncorrectMsg,
   emailIncorrectMsg,
+  sameMovieMsg,
+  filmNotFoundMsg,
+  cantDeleteOtherUserMovieMsg,
+  movieDeletedMsg,
+  incorrectMovieIdMsg,
 };

@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
-    "start": "set NODE_ENV=production && node app.js"
+    "start": "set NODE_ENV=production && node app.js",
+    "lint": "eslint .",
+    "lintFix": "esling . --fix"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
     "express-winston": "^4.2.0",
     "helmet": "^6.1.5",
     "joi": "^17.9.1",
+    "joi-objectid": "^4.0.2",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
     "winston": "^3.8.2"
