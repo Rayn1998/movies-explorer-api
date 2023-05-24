@@ -11,12 +11,13 @@ const auth = (req, res, next) => {
   let payload;
   try {
     payload = jwt.verify(token, process.env.NODE_ENV !== 'production' ? process.env.JWT_SECRET : 'secret');
+    req.user = payload;
+    next();
   } catch (e) {
+    res.status(401).send({ message: unauthorizedUserMsg });
     next(new BadAuthError(unauthorizedUserMsg));
     return;
   }
-  req.user = payload;
-  next();
 };
 
 module.exports = auth;
