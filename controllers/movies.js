@@ -32,13 +32,13 @@ const getMovies = async (req, res, next) => {
 };
 
 const createMovie = async (req, res, next) => {
-  const { movieId } = req.body;
+  const { id } = req.body;
   const userId = req.user._id;
   const movieData = { ...req.body, owner: [userId] };
 
   try {
     const isMovie = await Movie.findOneAndUpdate(
-      { movieId },
+      { id },
       { $addToSet: { owner: userId } },
       { new: true },
     ).populate('owner');

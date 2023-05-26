@@ -11,7 +11,7 @@ const moviePostValidation = {
     image: Joi.string().required().pattern(linkPattern),
     trailerLink: Joi.string().required().pattern(linkPattern),
     thumbnail: Joi.string().required().pattern(linkPattern),
-    movieId: Joi.number().required(),
+    id: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),
